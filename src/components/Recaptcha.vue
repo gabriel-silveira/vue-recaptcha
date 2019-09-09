@@ -4,12 +4,13 @@
       sitekey="6LcDgLcUAAAAAC5zfyZvuN6zVvTUMmujlgVXZ36y" 
       @verify="onVerify" />
     <div>
-      <button v-if="this.verified" type="button" @click="resetRecaptcha()">Reiniciar</button>
+      <button v-if="verified" type="button" @click="resetRecaptcha()">Reiniciar</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
 
 export default {
@@ -18,17 +19,18 @@ export default {
   methods: {
     onVerify(response) {
       console.log(response);
-      this.$parent.verified = true;
+      this.$store.dispatch('recaptchaModule/setVerified', true);
     },
     resetRecaptcha() {
-      this.$refs.recaptcha.reset();
+      //this.$refs.recaptcha.reset();
+      this.$store.dispatch('recaptchaModule/setVerified', false);
     }
   },
-  data: function() {
-    return ({
-      verified: false    
-    });
-  },
+  computed: {
+    ...mapGetters('recaptchaModule', [
+      'verified'
+    ])
+  }
 }
 </script>
 
