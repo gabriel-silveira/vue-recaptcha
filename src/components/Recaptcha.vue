@@ -1,7 +1,7 @@
 <template>
   <div class="recaptcha-wrapper">
     <vue-recaptcha 
-      sitekey="6LcDgLcUAAAAAC5zfyZvuN6zVvTUMmujlgVXZ36y" 
+      sitekey="siteKey" 
       @verify="onVerify" />
     <div>
       <button v-if="verified" type="button" @click="resetRecaptcha()">Reiniciar</button>
@@ -16,6 +16,9 @@ import VueRecaptcha from 'vue-recaptcha';
 export default {
   name: 'Recaptcha',
   components: { VueRecaptcha },
+  data: () => ({
+    siteKey: '',
+  }),
   methods: {
     onVerify(response) {
       console.log(response);
